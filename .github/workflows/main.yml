@@ -70,9 +70,12 @@ jobs:
         cd src
         python setup.py install
         cd ..
+        cd src_core
+        python setup.py install
+        cd ..
     - name: Install test deps
       run: |
-        cd tests
+        cd tests_core
         pip install -r test_requirements.txt
         cd ..
     - name: Test

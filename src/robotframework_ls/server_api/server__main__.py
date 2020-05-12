@@ -43,7 +43,7 @@ def start_server_process(args=(), python_exe=None, env=None):
             ["-vv", "--log-file=%s" % log_file]
     """
     from robocorp_ls_core.robotframework_log import get_logger
-    from robotframework_ls.subprocess_wrapper import subprocess
+    from robocorp_ls_core.subprocess_wrapper import subprocess
     import threading
     from robotframework_ls.options import Setup
 
@@ -92,17 +92,28 @@ def start_server_process(args=(), python_exe=None, env=None):
 
 if __name__ == "__main__":
     try:
-
+        src_folder = os.path.dirname(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        )
+        src_core_folder = os.path.join(os.path.dirname(src_folder), "src_core")
         try:
             import robotframework_ls
         except ImportError:
             # Automatically add it to the path if __main__ is being executed.
-            sys.path.append(
-                os.path.dirname(
-                    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-                )
-            )
+            assert os.path.exists(src_folder), "Expected: %s to exist" % (src_folder,)
+            sys.path.append(src_folder)
             import robotframework_ls  # @UnusedImport
+
+        try:
+            import robocorp_ls_core
+        except ImportError:
+            # Automatically add it to the path if __main__ is being executed.
+            assert os.path.exists(src_core_folder), "Expected: %s to exist" % (
+                src_core_folder,
+            )
+            assert os.path.exists(src_core_folder)
+            sys.path.append(src_core_folder)
+            import robocorp_ls_core  # @UnusedImport
 
         from robocorp_ls_core.robotframework_log import get_logger
 
