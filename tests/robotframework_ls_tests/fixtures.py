@@ -111,10 +111,8 @@ def _communicate_lang_server(
 
         language_server_client_class = _LanguageServerClient
 
-    from robotframework_ls.jsonrpc.streams import (
-        JsonRpcStreamReader,
-        JsonRpcStreamWriter,
-    )
+    from robocorp_ls_core.jsonrpc.streams import JsonRpcStreamWriter
+    from robocorp_ls_core.jsonrpc.streams import JsonRpcStreamReader
 
     w = JsonRpcStreamWriter(write_to, sort_keys=True)
     r = JsonRpcStreamReader(read_from)
@@ -210,10 +208,9 @@ def log_file(tmpdir):
 
 @pytest.fixture(autouse=True)
 def config_logger(tmpdir):
+    from robocorp_ls_core.robotframework_log import configure_logger
 
-    from robotframework_ls.robotframework_log import configure_logger
-
-    configure_logger("test", 2)
+    configure_logger("test", 2, None)
 
 
 @pytest.fixture

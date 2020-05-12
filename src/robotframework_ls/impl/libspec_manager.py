@@ -2,7 +2,7 @@ import os
 import sys
 from collections import namedtuple
 from robotframework_ls.constants import NULL
-from robotframework_ls.robotframework_log import get_logger
+from robocorp_ls_core.robotframework_log import get_logger
 
 log = get_logger(__name__)
 
@@ -36,7 +36,7 @@ class _FolderInfo(object):
                 return
 
             log.info("Tracking folder for changes: %s", self.folder_path)
-            from robotframework_ls.watchdog_wrapper import PathInfo
+            from robocorp_ls_core.watchdog_wrapper import PathInfo
 
             self._watch = observer.notify_on_extensions_change(
                 [PathInfo(self.folder_path, recursive=self.recursive)],
@@ -157,7 +157,7 @@ class LibspecManager(object):
         :param __internal_libspec_dir__:
             Only to be used in tests (to regenerate the builtins)!
         """
-        from robotframework_ls import watchdog_wrapper
+        from robocorp_ls_core import watchdog_wrapper
 
         try:
             from concurrent import futures
@@ -372,7 +372,7 @@ class LibspecManager(object):
         """
         import time
         from robotframework_ls.impl import robot_constants
-        from robotframework_ls.subprocess_wrapper import subprocess
+        from robocorp_ls_core.subprocess_wrapper import subprocess
 
         curtime = time.time()
 

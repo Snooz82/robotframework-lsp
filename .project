@@ -3,6 +3,7 @@
 	<name>robotframework-lsp</name>
 	<comment></comment>
 	<projects>
+		<project>robocorp-ls-core</project>
 		<project>robotframework</project>
 	</projects>
 	<buildSpec>

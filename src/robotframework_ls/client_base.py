@@ -2,7 +2,7 @@ import itertools
 from functools import partial
 import threading
 from robotframework_ls._utils import TimeoutError
-from robotframework_ls.robotframework_log import get_logger
+from robocorp_ls_core.robotframework_log import get_logger
 
 log = get_logger(__name__)
 

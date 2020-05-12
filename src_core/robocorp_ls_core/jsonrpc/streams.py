@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import threading
-from robotframework_ls.robotframework_log import get_logger
+from robocorp_ls_core.robotframework_log import get_logger
 
 try:
     import ujson as json
@@ -26,6 +26,7 @@ log = get_logger(__name__)
 
 
 class JsonRpcStreamReader(object):
+
     def __init__(self, rfile):
         self._rfile = rfile
 
@@ -113,6 +114,7 @@ class JsonRpcStreamReader(object):
 
 
 class JsonRpcStreamWriter(object):
+
     def __init__(self, wfile, **json_dumps_args):
         assert wfile is not None
         self._wfile = wfile

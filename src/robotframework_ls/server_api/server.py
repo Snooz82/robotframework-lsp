@@ -1,6 +1,6 @@
 from robotframework_ls.python_ls import PythonLanguageServer
 from robotframework_ls._utils import overrides
-from robotframework_ls.robotframework_log import get_logger
+from robocorp_ls_core.robotframework_log import get_logger
 
 
 log = get_logger(__name__)

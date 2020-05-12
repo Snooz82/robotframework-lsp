@@ -2,8 +2,8 @@ import subprocess
 
 
 def _fix_subprocess():
-    from robotframework_ls.constants import IS_PY37_ONWARDS
     import sys
+    from robocorp_ls_core.constants import IS_PY37_ONWARDS
 
     # Workaround for https://bugs.python.org/issue37380 in older versions of Python.
     # i.e.: OSError: [WinError 6] The handle is invalid

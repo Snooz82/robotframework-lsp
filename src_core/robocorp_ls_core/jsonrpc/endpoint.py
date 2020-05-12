@@ -14,20 +14,23 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import uuid
 import sys
-from robotframework_ls.robotframework_log import get_logger
+import uuid
 
-try:
-    from concurrent import futures
-except ImportError:
-    from robotframework_ls.libs_py2.concurrent import futures
+from robocorp_ls_core.robotframework_log import get_logger
+
 from .exceptions import (
     JsonRpcException,
     JsonRpcRequestCancelled,
     JsonRpcInternalError,
     JsonRpcMethodNotFound,
 )
+
+
+try:
+    from concurrent import futures
+except ImportError:
+    from robotframework_ls.libs_py2.concurrent import futures
 
 log = get_logger(__name__)
 JSONRPC_VERSION = "2.0"

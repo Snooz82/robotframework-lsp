@@ -1,4 +1,4 @@
-from robotframework_ls import cache
+from robocorp_ls_core.cache import instance_cache
 
 
 class IVariableFound(object):
@@ -30,7 +30,7 @@ class _VariableFound(object):
         self.variable_value = variable_value
 
     @property
-    @cache.instance_cache
+    @instance_cache
     def source(self):
         from robotframework_ls import uris
 

@@ -14,10 +14,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import logging
 import os
 import sys
-from robotframework_ls.robotframework_log import get_logger
+from robocorp_ls_core.robotframework_log import get_logger
 
 try:
     import socketserver
@@ -25,9 +24,9 @@ except ImportError:
     import SocketServer as socketserver
 import threading
 
-from robotframework_ls.jsonrpc.dispatchers import MethodDispatcher
-from robotframework_ls.jsonrpc.endpoint import Endpoint
-from robotframework_ls.jsonrpc.streams import JsonRpcStreamReader, JsonRpcStreamWriter
+from robocorp_ls_core.jsonrpc.dispatchers import MethodDispatcher
+from robocorp_ls_core.jsonrpc.endpoint import Endpoint
+from robocorp_ls_core.jsonrpc.streams import JsonRpcStreamReader, JsonRpcStreamWriter
 
 from . import uris
 from .config import config

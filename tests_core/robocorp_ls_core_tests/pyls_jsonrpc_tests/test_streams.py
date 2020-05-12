@@ -16,11 +16,12 @@
 # limitations under the License.
 # pylint: disable=redefined-outer-name
 from io import BytesIO
-import os
+
 import mock
 import pytest
 
-from robotframework_ls.jsonrpc.streams import JsonRpcStreamReader, JsonRpcStreamWriter
+from robocorp_ls_core.jsonrpc.streams import JsonRpcStreamReader, \
+    JsonRpcStreamWriter
 
 
 @pytest.fixture()

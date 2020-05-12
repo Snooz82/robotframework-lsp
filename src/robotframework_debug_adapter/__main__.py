@@ -55,14 +55,17 @@ def main():
         from robotframework_debug_adapter.debug_adapter_threads import (
             STOP_WRITER_THREAD,
         )
-        from robotframework_ls.robotframework_log import (
+        from robocorp_ls_core.robotframework_log import (
             get_logger,
             configure_logger,
             log_args_and_python,
         )
         import traceback
 
-        configure_logger("dap")
+        from robotframework_debug_adapter.constants import LOG_FILENAME
+        from robotframework_debug_adapter.constants import LOG_LEVEL
+
+        configure_logger("dap", LOG_LEVEL, LOG_FILENAME)
         log = get_logger("robotframework_debug_adapter.__main__")
         log_args_and_python(log, sys.argv)
 

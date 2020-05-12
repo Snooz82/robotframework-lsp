@@ -1,8 +1,8 @@
 from robotframework_ls.workspace import Workspace, Document
 from robotframework_ls._utils import overrides
-from robotframework_ls.cache import instance_cache
+from robocorp_ls_core.cache import instance_cache
 from robotframework_ls.constants import NULL
-from robotframework_ls.robotframework_log import get_logger
+from robocorp_ls_core.robotframework_log import get_logger
 
 log = get_logger(__name__)
 

@@ -164,20 +164,12 @@ def _configure_logger(prefix, log_level, log_file):
     _log_config.log_filename = log_file
 
 
-def configure_logger(postfix, log_level=None, log_file=None):
+def configure_logger(postfix, log_level, log_file):
     """
     :param log_file:
         - If None, get target file from env var.
         - If empty string log to stderr.
     """
-    from robotframework_debug_adapter.constants import LOG_FILENAME
-    from robotframework_debug_adapter.constants import LOG_LEVEL
-
-    if log_level is None:
-        log_level = LOG_LEVEL
-
-    if log_file is None:
-        log_file = LOG_FILENAME
 
     if log_file:
         try:

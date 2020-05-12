@@ -1,8 +1,8 @@
-import sys
-import socket as socket_module
 from os.path import os
-import threading
 import json
+import socket as socket_module
+import sys
+import threading
 
 try:
     import queue
@@ -19,7 +19,7 @@ LOG_FORMAT = "ROBOT: %(asctime)s UTC pid: %(process)d - %(threadName)s - %(level
 def connect(port):
     from robotframework_ls.options import DEFAULT_TIMEOUT
     from robotframework_ls.impl.robot_lsp_constants import ENV_OPTION_ROBOT_DAP_TIMEOUT
-    from robotframework_ls.robotframework_log import get_logger
+    from robocorp_ls_core.robotframework_log import get_logger
 
     log = get_logger("robotframework_debug_adapter.run_robot__main__.py")
 
@@ -96,7 +96,7 @@ class _DAPCommandProcessor(threading.Thread):
         self._write_queue.put(msg)
 
     def process_message(self, protocol_message):
-        from robotframework_ls.robotframework_log import get_logger
+        from robocorp_ls_core.robotframework_log import get_logger
         from robotframework_debug_adapter.constants import DEBUG
         from robotframework_debug_adapter.debug_adapter_threads import (
             READER_THREAD_STOPPED,
@@ -184,13 +184,16 @@ def main():
         sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
         import robotframework_ls  # @UnusedImport
 
-    from robotframework_ls.robotframework_log import (
+    from robocorp_ls_core.robotframework_log import (
         configure_logger,
         log_args_and_python,
+        get_logger,
     )
-    from robotframework_ls.robotframework_log import get_logger
 
-    configure_logger("robot")
+    from robotframework_debug_adapter.constants import LOG_FILENAME
+    from robotframework_debug_adapter.constants import LOG_LEVEL
+
+    configure_logger("robot", LOG_LEVEL, LOG_FILENAME)
     log = get_logger("robotframework_debug_adapter.run_robot__main__.py")
     log_args_and_python(log, sys.argv)
 

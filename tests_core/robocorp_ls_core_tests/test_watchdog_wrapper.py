@@ -2,9 +2,9 @@ import time
 
 
 def test_watchdog(tmpdir):
-    from robotframework_ls_tests.fixtures import wait_for_condition
-    from robotframework_ls.watchdog_wrapper import PathInfo
-    from robotframework_ls import watchdog_wrapper
+    from robocorp_ls_core import watchdog_wrapper
+    from robocorp_ls_core.watchdog_wrapper import PathInfo
+    from robocorp_ls_core.basic import wait_for_condition
 
     tmpdir.join("dir_not_rec").mkdir()
     tmpdir.join("dir_rec").mkdir()

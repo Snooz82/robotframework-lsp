@@ -14,18 +14,21 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import time
+
+import mock
+import pytest
+
+from robocorp_ls_core.jsonrpc import exceptions
+from robocorp_ls_core.jsonrpc.endpoint import Endpoint
+
 
 # pylint: disable=redefined-outer-name
 try:
     from concurrent import futures
 except ImportError:
     from robotframework_ls.libs_py2.concurrent import futures
-import time
-import mock
-import pytest
 
-from robotframework_ls.jsonrpc import exceptions
-from robotframework_ls.jsonrpc.endpoint import Endpoint
 
 MSG_ID = "id"
 
@@ -107,7 +110,7 @@ def test_request_error(endpoint, consumer):
 
 
 def test_request_cancel(endpoint, consumer):
-    from robotframework_ls.jsonrpc.exceptions import JsonRpcRequestCancelled
+    from robocorp_ls_core.jsonrpc.exceptions import JsonRpcRequestCancelled
 
     future = endpoint.request("methodName", {"key": "value"})
     assert not future.done()

@@ -75,11 +75,11 @@ def main(args=None, after_bind=lambda server: None, language_server_class=None):
         import robotframework_ls  # @UnusedImport
 
     from robotframework_ls.options import Setup, Options
-    from robotframework_ls.robotframework_log import (
+    from robocorp_ls_core.robotframework_log import (
         configure_logger,
         log_args_and_python,
+        get_logger,
     )
-    from robotframework_ls.robotframework_log import get_logger
 
     from robotframework_ls.python_ls import (
         start_io_lang_server,

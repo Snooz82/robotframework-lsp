@@ -1,7 +1,6 @@
 from robotframework_ls import _utils
 from robotframework_ls.python_ls import PythonLanguageServer
 import threading
-import logging
 from robotframework_ls._utils import (
     overrides,
     log_and_silence_errors,
@@ -15,7 +14,7 @@ from functools import partial
 import itertools
 import time
 from robotframework_ls.constants import DEFAULT_COMPLETIONS_TIMEOUT
-from robotframework_ls.robotframework_log import get_logger
+from robocorp_ls_core.robotframework_log import get_logger
 
 
 log = get_logger(__name__)
@@ -128,7 +127,7 @@ class _ServerApi(object):
                     from robotframework_ls.server_api.server__main__ import (
                         start_server_process,
                     )
-                    from robotframework_ls.jsonrpc.streams import (
+                    from robocorp_ls_core.jsonrpc.streams import (
                         JsonRpcStreamWriter,
                         JsonRpcStreamReader,
                     )

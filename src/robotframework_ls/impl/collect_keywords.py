@@ -1,6 +1,6 @@
 import os.path
-from robotframework_ls.robotframework_log import get_logger
-from robotframework_ls import cache
+from robocorp_ls_core.robotframework_log import get_logger
+from robocorp_ls_core.cache import instance_cache
 
 log = get_logger(__name__)
 
@@ -50,7 +50,7 @@ class _KeywordFoundFromAst(object):
         return "markdown"
 
     @property
-    @cache.instance_cache
+    @instance_cache
     def docs(self):
         from robotframework_ls.impl import ast_utils
 
@@ -58,7 +58,7 @@ class _KeywordFoundFromAst(object):
         return "%s(%s)\n\n%s" % (self.keyword_name, ", ".join(self.keyword_args), docs)
 
     @property
-    @cache.instance_cache
+    @instance_cache
     def source(self):
         from robotframework_ls import uris
 
@@ -120,7 +120,7 @@ class _KeywordFoundFromLibrary(object):
         return None
 
     @property
-    @cache.instance_cache
+    @instance_cache
     def source(self):
         source = self._keyword_doc.source or self._library_doc.source
         if source:
@@ -128,13 +128,13 @@ class _KeywordFoundFromLibrary(object):
                 source = self._make_absolute(source)
         return source
 
-    @cache.instance_cache
+    @instance_cache
     def _make_absolute(self, source):
         dirname = os.path.dirname(self._library_doc.filename)
         return os.path.abspath(os.path.join(dirname, source))
 
     @property
-    @cache.instance_cache
+    @instance_cache
     def lineno(self):
         return self._keyword_doc.lineno - 1  # i.e.: make 0-based.
 
@@ -151,7 +151,7 @@ class _KeywordFoundFromLibrary(object):
         return 0
 
     @property
-    @cache.instance_cache
+    @instance_cache
     def _docs_and_format(self):
         from robotframework_ls.impl.robot_specbuilder import docs_and_format
 
@@ -166,13 +166,13 @@ class _KeywordFoundFromLibrary(object):
         return docs, docs_format
 
     @property
-    @cache.instance_cache
+    @instance_cache
     def docs(self):
         docs, _docs_format = self._docs_and_format
         return docs
 
     @property
-    @cache.instance_cache
+    @instance_cache
     def docs_format(self):
         _docs, docs_format = self._docs_and_format
         return docs_format

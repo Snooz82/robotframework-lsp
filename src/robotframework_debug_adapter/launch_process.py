@@ -15,14 +15,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import threading
-from robotframework_debug_adapter.constants import DEBUG
 from functools import partial
-import itertools
+from robocorp_ls_core.robotframework_log import get_logger
+from robotframework_debug_adapter.constants import DEBUG
 from robotframework_ls.options import DEFAULT_TIMEOUT
+import itertools
 import json
 import os.path
-from robotframework_ls.robotframework_log import get_logger
+import threading
 
 try:
     import Queue as queue
