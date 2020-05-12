@@ -128,9 +128,17 @@ class CommandProcessor(object):
         """
         from robotframework_debug_adapter.dap.dap_base_schema import build_response
 
-        # : :type configuration_done_response: ConfigurationDoneResponse
         configuration_done_response = build_response(request)
-        self.write_message(configuration_done_response)  # acknowledge it
+        if self._launched_process.send_and_wait_for_configuration_done_request():
+            # : :type configuration_done_response: ConfigurationDoneResponse
+            self.write_message(configuration_done_response)  # acknowledge it
+        else:
+            # timed out
+            configuration_done_response.success = False
+            configuration_done_response.message = (
+                "Timed out waiting for configurationDone event."
+            )
+            self.write_message(configuration_done_response)
 
     def on_threads_request(self, request):
         """

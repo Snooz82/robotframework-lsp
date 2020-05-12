@@ -131,6 +131,8 @@ class _DebugAdapterComm(threading.Thread):
                 method_name = "on_%s_request" % (protocol_message.command,)
             elif protocol_message.type == "event":
                 method_name = "on_%s_event" % (protocol_message.event,)
+            elif protocol_message.type == "response":
+                method_name = "on_%s_response" % (protocol_message.command,)
             else:
                 if DEBUG:
                     log.debug(
@@ -167,7 +169,7 @@ class _DebugAdapterComm(threading.Thread):
         self._terminated_event.set()
         self.write_message(TerminatedEvent(TerminatedEventBody()))
 
-    def write_message(self, protocol_message):
+    def write_message(self, protocol_message, on_response=None):
         """
         :param BaseSchema protocol_message:
             Some instance of one of the messages in the debug_adapter.schema.
@@ -381,6 +383,25 @@ class LaunchProcess(object):
             )
             command_processor.write_message(terminated_event)
 
+    def send_and_wait_for_configuration_done_request(self):
+        from robotframework_debug_adapter.dap.dap_schema import ConfigurationDoneRequest
+        from robotframework_debug_adapter.dap.dap_schema import (
+            ConfigurationDoneArguments,
+        )
+
+        event = threading.Event()
+        self._debug_adapter_comm.write_message(
+            ConfigurationDoneRequest(ConfigurationDoneArguments()),
+            on_response=lambda *args, **kwargs: event.set(),
+        )
+        log.debug(
+            "Wating for configuration_done response for %s seconds."
+            % (DEFAULT_TIMEOUT,)
+        )
+        ret = event.wait(DEFAULT_TIMEOUT)
+        log.debug("Received configuration_done response: %s" % (ret,))
+        return ret
+
     def launch(self):
         from robotframework_debug_adapter.constants import TERMINAL_NONE
         from robotframework_debug_adapter.constants import TERMINAL_EXTERNAL
@@ -394,10 +415,6 @@ class LaunchProcess(object):
         from robotframework_debug_adapter.dap.dap_schema import InitializeRequest
         from robotframework_debug_adapter.dap.dap_schema import (
             InitializeRequestArguments,
-        )
-        from robotframework_debug_adapter.dap.dap_schema import ConfigurationDoneRequest
-        from robotframework_debug_adapter.dap.dap_schema import (
-            ConfigurationDoneArguments,
         )
 
         # Note: using a weak-reference so that callbacks don't keep it alive
@@ -480,9 +497,6 @@ class LaunchProcess(object):
             InitializeRequest(
                 InitializeRequestArguments("robot-launch-process-adapter")
             )
-        )
-        self._debug_adapter_comm.write_message(
-            ConfigurationDoneRequest(ConfigurationDoneArguments())
         )
         # Note: only start listening stdout/stderr when connected.
         for t in threads:

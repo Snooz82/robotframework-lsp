@@ -51,6 +51,14 @@ def initialize(debugger_api):
     assert isinstance(event, InitializedEvent)
 
 
+def configuration_done(debugger_api, success=True):
+    from robotframework_debug_adapter.dap.dap_schema import ConfigurationDoneRequest
+    from robotframework_debug_adapter.dap.dap_schema import ConfigurationDoneResponse
+
+    debugger_api.write(ConfigurationDoneRequest())
+    debugger_api.read(ConfigurationDoneResponse)
+
+
 def launch(debugger_api, target, debug=True, success=True, terminal="none"):
     from robotframework_debug_adapter.dap.dap_schema import LaunchRequest
     from robotframework_debug_adapter.dap.dap_schema import LaunchRequestArguments
@@ -149,11 +157,24 @@ def test_simple_launch(debugger_api):
 
     target = debugger_api.get_dap_case_file("case_log.robot")
     launch(debugger_api, target, debug=False)
+    configuration_done(debugger_api)
 
     debugger_api.read(TerminatedEvent)
     debugger_api.assert_message_found(
         OutputEvent, lambda msg: "check that log works" in msg.body.output
     )
+
+
+def test_simple_debug_launch(debugger_api):
+    from robotframework_debug_adapter.dap.dap_schema import TerminatedEvent
+    from robotframework_debug_adapter.dap.dap_schema import OutputEvent
+
+    initialize(debugger_api)
+    target = debugger_api.get_dap_case_file("case_log.robot")
+
+    launch(debugger_api, target, debug=True)
+
+    debugger_api.read(TerminatedEvent)
 
 
 def test_launch_in_external_terminal(debugger_api):
